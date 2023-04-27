@@ -1,31 +1,26 @@
+data class OrderItem(val name: String, val price: Double)
+
 class TaxCalculator {
     companion object {
         val salesTaxPercentage = 15.0
-        fun getTaxAmountForOrderItems(orderItemList: List<OrderItem>): Double {
-            var orderAmount: Double = 0.00
-            for (item in orderItemList) {
-                orderAmount += item.price
+
+        fun getTaxAmountForOrderItems(orderItems: List<OrderItem>): Double {
+            var orderAmount = 0.00
+
+            for (orderItem in orderItems) {
+                orderAmount += orderItem.price
             }
-            return orderAmount * salesTaxPercentage / 100
+
+            return orderAmount * salesTaxPercentage / 100.0
         }
     }
 }
 
 fun main() {
-    val orderItemList: List<OrderItem> =
-            mutableListOf<OrderItem>(
-                    OrderItem("Burger", 8.00),
-                    OrderItem("Fries", 4.00),
-                    OrderItem("Soda", 2.00)
-            )
-    println(TaxCalculator.getTaxAmountForOrderItems(orderItemList))
-}
+    val orderItemList =
+            listOf(OrderItem("Burger", 8.00), OrderItem("Fries", 4.00), OrderItem("Soda", 2.00))
 
-class OrderItem {
-    val name: String
-    val price: Double
-    constructor(name: String, price: Double) {
-        this.name = name
-        this.price = price
-    }
+    val taxAmount = TaxCalculator.getTaxAmountForOrderItems(orderItemList)
+
+    println(taxAmount)
 }
